@@ -6,9 +6,9 @@ require __DIR__ . '/vendor/autoload.php';
 
 $config['addContentLengthHeader'] = false;
 $config['displayErrorDetails'] = true;
-$config['db']['host']   = "hostname";
+$config['db']['host']   = "host";
 $config['db']['user']   = "user";
-$config['db']['pass']   = "password";
+$config['db']['pass']   = "pass";
 $config['db']['dbname'] = "dbname";
 
 $app = new \Slim\App(["settings" => $config]);
@@ -58,7 +58,11 @@ $app->post('/mahasiswa/new', function (Request $request, Response $response) {
 	$mapper = new MahasiswaMapper($this->db);
 	$mapper->saveMahasiswa($data['nim'], $data['nama'], $data['alamat']);
 	
-	echo $response->getStatusCode();
+	$obj = (object) [
+		'status' => strval($response->getStatusCode())
+	];
+	
+	echo json_encode($obj);
 });
 
 /* put pakai header
@@ -78,14 +82,22 @@ $app->put('/mahasiswa/update/{old_nim}', function (Request $request, Response $r
 	$mapper = new MahasiswaMapper($this->db);
 	$mapper->updateMahasiswa($args['old_nim'], $data['nim'], $data['nama'], $data['alamat']);
 	
-	echo $response->getStatusCode();
+	$obj = (object) [
+		'status' => strval($response->getStatusCode())
+	];
+	
+	echo json_encode($obj);
 });
 
 $app->delete('/mahasiswa/{nim}', function (Request $request, Response $response, $args) {
 	$mapper = new MahasiswaMapper($this->db);
     $mahasiswa = $mapper->deleteMahasiswa($args['nim']);
 
-    echo $response->getStatusCode();
+    $obj = (object) [
+		'status' => strval($response->getStatusCode())
+	];
+	
+	echo json_encode($obj);
 });
 
 $app->run();
