@@ -1,7 +1,8 @@
 <?php
-
+// class untuk melakukan query db ke tabel tbl_mahasiswa
 class MahasiswaMapper extends Mapper
 {
+	// mengambil semua record di tbl_mahasiswa
     public function getAllMhs() {
         $sql = "SELECT * from tbl_mahasiswa";
         $stmt = $this->db->query($sql);
@@ -11,6 +12,7 @@ class MahasiswaMapper extends Mapper
         return $results;
     }
 
+	// mengambil record dari tbl_mahasiswa berdasarkan nim mahasiswa
     public function getMahasiswaByNim($nim) {
         $sql = "SELECT * from tbl_mahasiswa where nim = :nim";
         $stmt = $this->db->prepare($sql);
@@ -22,6 +24,7 @@ class MahasiswaMapper extends Mapper
 
     }
 
+	// memasukkan data mahasiswa baru ke tbl_mahasiswa
     public function saveMahasiswa($nim, $nama, $alamat) {
         $sql = "insert into tbl_mahasiswa
             (nim, nama, alamat) values
@@ -39,6 +42,7 @@ class MahasiswaMapper extends Mapper
         }
     }
     
+    // mengupdate data mahasiswa
     public function updateMahasiswa($old_nim, $nim, $nama, $alamat) {
         $sql = "update tbl_mahasiswa set nim = :nim, nama = :nama, alamat = :alamat where nim = :old_nim";
 
@@ -55,6 +59,7 @@ class MahasiswaMapper extends Mapper
         }
     }
     
+    // menghapus data mahasiswa
     public function deleteMahasiswa($nim) {
 		$sql = "delete from tbl_mahasiswa where nim = :nim";
 		
